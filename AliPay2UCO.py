@@ -95,7 +95,7 @@ class Data_handle:
             field = ['`Platform_name`', '`File_name`',
                      '`Partner_transaction_id`', '`Transaction_id`', '`Amount`', '`Rmb_amount`',
                      '`Fee`', '`Refund`', '`Settlement`', '`Rmb_settlement`', '`Currency`',
-                     '`Rate`', '`Payment_time`', '`Settlement_time`', '`Type`', '`Original_partner_transaction_ID`',
+                     '`Rate`', '`Payment_time`', '`Type`', '`Original_partner_transaction_ID`',
                      '`Created`', '`Updated`']  # 外币表数据表列名列表
         else:
             print("类型选择错误")
@@ -210,7 +210,7 @@ if __name__ == "__main__":
                     # TODO 迭代数据块
                     for df in dfs:
                         # TODO 处理过后的dataframe块，和店铺名称
-                        df = tool.handle_local_frame(df=df)
+                        df = tool.handle_foreign_frame(df=df)
                         j += tool.insert_df_to_mysql(dataframe=df, filename=file, filepath=file_path)
                     # TODO 记录日志
                     file_done_info = "{}文件写入完成，共计{}行".format(file, str(j))

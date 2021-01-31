@@ -20,7 +20,7 @@ def switch_db_env():
         user = dev_conf.USERNAME
         db = dev_conf.DATABASE
         passwd = dev_conf.PASSWORD
-    elif conf.DB_ENV == 'EL':
+    elif conf.DB_ENV == 'ELC':
         host = dev_conf.ELC_HOST
         port = dev_conf.ELC_PORT
         user = dev_conf.USERNAME
