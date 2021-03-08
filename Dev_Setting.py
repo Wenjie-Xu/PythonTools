@@ -7,7 +7,7 @@ EL_PORT = 5012
 ELC_HOST = '10.2.4.66'
 ELC_PORT = 5009
 USERNAME = 'xuwenjie'
-PASSWORD = '!W924TRZ&LCyiWga'
+PASSWORD = 'xwjxws123A@A@123'
 DATABASE = 'test'
 
 # TODO 本地连接信息
