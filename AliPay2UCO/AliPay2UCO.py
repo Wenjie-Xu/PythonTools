@@ -9,9 +9,10 @@ import traceback
 import warnings
 from pymysql import connect
 
-import Config as conf
+from AliPay2UCO import Config as conf
 from repostory.Csv_to_utf8 import detectCode
 from repostory.SwitchDB import switch_db_env
+
 
 class SQL_Connect:
     def __init__(self, hostname, port, user, passwd, db):

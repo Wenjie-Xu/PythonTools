@@ -1,5 +1,6 @@
-import Config as conf
 import Dev_Setting as dev_conf
+from AliPay2UCO import Config as conf
+
 
 def switch_db_env():
     if conf.DB_ENV == 'UCO':

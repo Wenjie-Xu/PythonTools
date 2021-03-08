@@ -6,8 +6,8 @@ import shutil
 import traceback
 from pymysql import connect
 
+import AliPay2UCO.instances.instances_01.Config as conf
 import Dev_Setting as dev_conf
-import instances.instances_01.Config as conf
 from repostory.Csv_to_utf8 import handleEncoding
 
 
