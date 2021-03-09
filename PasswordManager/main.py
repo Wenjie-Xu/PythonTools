@@ -1,5 +1,7 @@
 from PasswordManager.PASSWORDS import PASSWORDS
 
+import pyperclip as clip # TODO 操作剪贴板模块，copy()和paste()方法
+
 class Manager:
     def __init__(self):
         systems = [system for system in PASSWORDS.keys()]
@@ -30,7 +32,7 @@ class Manager:
 
     '''查询'''
     def query(self):
-        return '\n' + str(PASSWORDS[self.system][self.env])
+        return PASSWORDS[self.system][self.env]
 
 
 if __name__ == '__main__':
@@ -42,7 +44,10 @@ if __name__ == '__main__':
         action = input('\n' + str(actions) + '\n请输入需要进行的操作:')
 
         if action == '1':
-            print(manager.query())
+            result_dict = manager.query()
+            print('\n' + str(result_dict))
+            clip.copy(result_dict['PASSWORD']) # 将密码输出到剪贴板中
+
         elif action == '2':
             new_password = input('\n请输入需要更新的密码：')
             manager.update(new_password)
