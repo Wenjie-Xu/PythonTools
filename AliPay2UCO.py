@@ -35,7 +35,7 @@ class Data_handle:
 
         if conf.BILL_TYPE == 'foreign':
             df = pd.read_csv(filepath, sep=',', header=0, keep_default_na=False,
-                             encoding=file_code, low_memory=False, chunksize=10000)
+                             encoding='iso-8859-1', low_memory=False, chunksize=10000)
 
         return df  # 可迭代对象
 
@@ -69,8 +69,13 @@ class Data_handle:
 
     # TODO 处理海外帐单（字段提取和处理）
     def handle_foreign_frame(self, df):
+        columns = ['Payment_time','Transaction_id','Partner_transaction_id','Amount','Foreign_amount',
+                   'Currency','Exchange_Rate','Fee_type','Fee_amount','Foreign_fee_amount','Fee_desc',
+                   'Original_partner_transaction_ID']  # 海外单csv字段
+        df = df[columns]
         df['Transaction_id'] = df['Transaction_id'].apply(lambda x: str(x).replace('\t', ''))
-        columns = ['', '']  # 待提取字段
+        df['Original_partner_transaction_ID'] = df['Original_partner_transaction_ID'].apply(lambda x: str(x).replace('\t', ''))
+        df['Fee_desc'] = df['Fee_desc'].apply(lambda x: str(x)[0:10])
         return df
 
     # TODO 将dataframe插入数据库（会识别国内还是海外）
@@ -93,9 +98,9 @@ class Data_handle:
         elif conf.BILL_TYPE == 'foreign':
             table_name = 'foreignalipayorderuploading'
             field = ['`Platform_name`', '`File_name`',
-                     '`Partner_transaction_id`', '`Transaction_id`', '`Amount`', '`Rmb_amount`',
-                     '`Fee`', '`Refund`', '`Settlement`', '`Rmb_settlement`', '`Currency`',
-                     '`Rate`', '`Payment_time`', '`Type`', '`Original_partner_transaction_ID`',
+                     '`Payment_time`', '`Transaction_id`', '`Partner_transaction_id`', '`Amount`',
+                     '`Foreign_amount`', '`Currency`', '`Exchange_Rate`', '`Fee_type`', '`Fee_amount`',
+                     '`Foreign_fee_amount`', '`Fee_desc`','`Original_partner_transaction_ID`',
                      '`Created`', '`Updated`']  # 外币表数据表列名列表
         else:
             print("类型选择错误")
@@ -146,6 +151,7 @@ class Data_handle:
         return len(values)
 
 def My_config():
+
     # TODO 忽略警告
     warnings.filterwarnings("ignore")
     # TODO pd.set_option()就是pycharm输出控制显示的设置
@@ -180,7 +186,7 @@ if __name__ == "__main__":
             # 判断店铺类型
             if conf.BILL_TYPE == 'local':
                 # 判断文件是不是汇总文件
-                if file.split('.')[-1] in ['csv'] and '汇总' not in file and ('账务明细' in file or 'DETAILS' in file):
+                if file.split('.')[-1] in ['csv'] and '汇总' not in file and ('账务明细' in file or 'DETAILS' in file or '主账户' in file):
                     print("开始处理文件{}".format(file))
                     i += 1
                     dfs = tool.read_csv(file_path)
@@ -203,7 +209,7 @@ if __name__ == "__main__":
                     os.remove(file_path)  # 读取完毕删除文件
 
             elif conf.BILL_TYPE == 'foreign':
-                if file.split('.')[-1] in ['csv'] and 'strade' in file:
+                if file.split('.')[-1] in ['csv'] and 'fee' in file:
                     print("开始处理文件{}".format(file))
                     i += 1
                     dfs = tool.read_csv(file_path)
@@ -226,6 +232,7 @@ if __name__ == "__main__":
         # TODO 删除子文件夹
         shutil.rmtree(dir)
 
-    dir_done_info = "文件夹读取完成，共处理了{}个文件~，共计{}行".format(str(i), str(total_row))
+    platform_name = file_path.split('/')[-3]
+    dir_done_info = "文件夹读取完成，共处理了{}个文件~，共计{}行\n{}----------------------".format(str(i), str(total_row), platform_name)
     logging.info(dir_done_info)
     print(dir_done_info)

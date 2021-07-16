@@ -2,8 +2,11 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/LOG/file_done.log" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/instances/instance_01/LOG/error.log" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/instances/instance_01/LOG/file_done.log" charset="GBK" />
     <file url="file://$PROJECT_DIR$/instances/instance_01/LOG/file_done.log" charset="GBK" />
     <file url="file://$PROJECT_DIR$/instances/instance_02/LOG/error.log" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/instances/instance_02/LOG/file_done.log" charset="GBK" />
     <file url="file://$PROJECT_DIR$/instances/instance_02/LOG/file_done.log" charset="GBK" />
   </component>
 </project>

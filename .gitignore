@@ -1,3 +1,6 @@
 instances/
 LOG/
 Config.py
+Dev_Setting.py
+*.xml
+*.pyc
